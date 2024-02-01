@@ -1,5 +1,7 @@
+import Image from "next/image";
 import React from "react";
 import styled from "styled-components";
+import { IconTemplate } from "../SHARED/IconTemplate/IconTemplate";
 
 export const Nav = styled.nav`
   background-color: ${({ theme: { color } }) => color.spinDarkGray};
@@ -68,5 +70,33 @@ export const SearchIconContainer = styled.div`
 `;
 
 export const Navbar = () => {
-  return <div>Navbar</div>;
+  return (
+    <Nav>
+      <NavContent>
+        <NavLogo>
+          <Image
+            src="/assets/spinbet-logo.svg"
+            width="120"
+            height={27}
+            alt="Spinbet"
+          />
+        </NavLogo>
+        <NavSearchInput>
+          <input type="text " placeholder="Search match" />
+          <SearchIconContainer>
+            <IconTemplate svgName="ic:baseline-search" svgWidth={28} />
+          </SearchIconContainer>
+        </NavSearchInput>
+        <NavMenu>
+          <IconTemplate label="BLOG" svgName="carbon:blog" />
+          <IconTemplate
+            label="Gifts"
+            svgName="material-symbols:featured-seasonal-and-gifts-rounded"
+          />
+          <IconTemplate label="DROPING ODDS" svgName="ph:trend-down" />
+          <IconTemplate label="NOTIFICATION" svgName="ep:notification" />
+        </NavMenu>
+      </NavContent>
+    </Nav>
+  );
 };
