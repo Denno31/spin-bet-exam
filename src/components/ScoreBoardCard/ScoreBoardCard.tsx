@@ -9,6 +9,9 @@ const CardContainer = styled.div`
   color: ${({ theme: { color } }) => color.spinBetWhite};
   padding: 1.2rem 0;
   border-radius: 5px;
+  box-shadow: 0px 0px 0px 3px rgba(61, 61, 61, 0.75);
+  -webkit-box-shadow: 0px 0px 0px 3px rgba(61, 61, 61, 0.75);
+  -moz-box-shadow: 0px 0px 0px 3px rgba(61, 61, 61, 0.75);
 `;
 
 const MatchCountryWrapper = styled.small`

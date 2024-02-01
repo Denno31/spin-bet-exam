@@ -4,10 +4,9 @@ interface Props {
   children: ReactNode;
 }
 
-const Container = styled.section`
-  width: 100%;
-  max-width: 1400px;
+const Container = styled.main`
   margin: 0.1rem auto;
+  height: 88vh;
 `;
 
 export const LayoutContainer = ({ children }: Props) => {

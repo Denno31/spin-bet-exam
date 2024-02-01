@@ -41,9 +41,14 @@ const FilterButton = styled.button<{ $active: boolean }>`
 `;
 
 const TopSection = styled.div`
-  display: flex;
-  justify-content: space-between;
   margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  & > div {
+    display: flex;
+    justify-content: space-between;
+    min-width: 1280px;
+  }
 `;
 
 const FilterButtonsContainer = styled.nav`
@@ -51,31 +56,39 @@ const FilterButtonsContainer = styled.nav`
 `;
 
 const ScoreCardsContainer = styled.section`
+  max-width: 1280px;
   margin-top: 12px;
   display: flex;
-  gap: 2px;
+  gap: 4px;
   flex-wrap: wrap;
-  overflow-y: scroll;
 `;
 
 const ScoreCardsSection = styled.section`
-  height: 88vh;
+  height: 80vh;
+  overflow-y: scroll;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
 `;
 
 export const HomePage = () => {
   return (
     <LayoutContainer>
       <TopSection>
-        <Header>Football live scores and schedule</Header>
-        <FilterButtonsContainer>
-          <FilterButton $active>ALL 179</FilterButton>
-          <FilterButton $active>RESULT 179</FilterButton>
-          <FilterButton $active>LIVE 179</FilterButton>
-          <FilterButton $active>UPCOMING 179</FilterButton>
-        </FilterButtonsContainer>
+        <div>
+          <Header>Football live scores and schedule</Header>
+          <FilterButtonsContainer>
+            <FilterButton $active>ALL 179</FilterButton>
+            <FilterButton $active>RESULT 179</FilterButton>
+            <FilterButton $active>LIVE 179</FilterButton>
+            <FilterButton $active>UPCOMING 179</FilterButton>
+          </FilterButtonsContainer>
+        </div>
       </TopSection>
       <ScoreCardsSection>
         <ScoreCardsContainer>
+          <ScoreBoardCard />
+          <ScoreBoardCard />
           <ScoreBoardCard />
           <ScoreBoardCard />
           <ScoreBoardCard />
