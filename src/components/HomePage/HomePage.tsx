@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { LayoutContainer } from "../SHARED/LayoutContainer/LayoutContainer";
 import { styled } from "styled-components";
 import { ScoreBoardCard } from "../ScoreBoardCard/ScoreBoardCard";
+import { getMatchesFilters } from "@/utils/getMatchesFilters";
+import { FilterMenu } from "../FilterMenu/FilterMenu";
 
 const Header = styled.h1`
   font-size: medium;
@@ -13,37 +15,6 @@ const Header = styled.h1`
   }
 `;
 
-const FilterButton = styled.button<{ $active?: boolean }>`
-  font-weight: 545;
-  background: transparent;
-  color: ${({ theme: { color }, $active }) =>
-    $active ? color.spinGreen : color.spinDarkGray};
-  border: none;
-  border-bottom: 2px solid
-    ${({ theme: { color }, $active }) =>
-      $active ? color.spinGreen : "transparent"};
-  padding-left: 10px;
-  padding-right: 10px;
-  font-size: 0.75rem;
-  margin-right: 5px;
-  cursor: pointer;
-  &:hover {
-    border-bottom: 2px solid ${({ theme: { color } }) => color.spinGreen};
-    color: ${({ theme: { color } }) => color.spinGreen};
-  }
-  & > span {
-    margin-left: 5px;
-    font-weight: 500;
-  }
-  @media (max-width: ${({ theme: { screen } }) => screen.md}) {
-    font-size: 0.7rem !important;
-  }
-  @media (min-width: ${({ theme: { screen } }) =>
-      screen.md}) and (max-width: ${({ theme: { screen } }) => screen.xl}) {
-    margin-right: 3px;
-  }
-`;
-
 const TopSection = styled.div`
   background-color: #e5e7eb;
   justify-content: center;
@@ -52,11 +23,6 @@ const TopSection = styled.div`
     justify-content: space-between;
     min-width: 1280px;
   }
-`;
-
-const FilterButtonsContainer = styled.nav`
-  display: flex;
-  padding-right: 0.9rem;
 `;
 
 const ScoreCardsOuterWrapper = styled.div`
@@ -93,20 +59,7 @@ export const HomePage = () => {
       <TopSection>
         <TopSectionContentWrapper>
           <Header>Football live scores and schedule</Header>
-          <FilterButtonsContainer>
-            <FilterButton $active>
-              ALL <span>(179)</span>
-            </FilterButton>
-            <FilterButton>
-              RESULT <span>(179)</span>
-            </FilterButton>
-            <FilterButton>
-              LIVE <span>(179)</span>
-            </FilterButton>
-            <FilterButton>
-              UPCOMING <span>(179)</span>
-            </FilterButton>
-          </FilterButtonsContainer>
+          <FilterMenu />
         </TopSectionContentWrapper>
       </TopSection>
       <ScoreCardsSection>
