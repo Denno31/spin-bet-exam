@@ -39,6 +39,8 @@ export const ScoreBoardCards = () => {
     [activeFilter.filter]
   );
 
+  console.log(matchesData);
+
   return (
     <ScoreCardsSection>
       <ScoreCardsOuterWrapper>

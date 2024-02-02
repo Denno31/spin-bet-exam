@@ -48,22 +48,51 @@ const MatchProgressContainer = styled.div`
   align-items: center;
 `;
 
+const ScoreBoardMatchStatus = styled.small<{ $matchStatus: string }>`
+  margin-top: 10px;
+  color: ${({ theme: { color }, $matchStatus }) => {
+    switch ($matchStatus) {
+      case "ENDED":
+        return color.spinGreen;
+      case "LIVE":
+        return color.spinBetYellow;
+      case "CANCELLED":
+        return color.spinBetRed;
+      default:
+        return color.default;
+    }
+  }};
+  @media (max-width: ${({ theme: { screen } }) => screen.md}) {
+    margin-top: 8px;
+  }
+`;
+
 export const ScoreBoardCard = ({ scoreCardMatch }: Props) => {
-  const { competition, country, status, homeTeam, awayTeam, timestamp } =
-    scoreCardMatch;
+  const {
+    competition,
+    country,
+    status,
+    homeTeam,
+    awayTeam,
+    timestamp,
+    liveStatus,
+  } = scoreCardMatch;
   const label =
     status.label === "UPCOMING" ? getDateFormatted(timestamp) : status.label;
+
   return (
     <CardContainer>
       <CountryNameText>{country}</CountryNameText>
       <h3>{competition}</h3>
-      <small>{label}</small>
+      <ScoreBoardMatchStatus $matchStatus={label}>
+        {label}
+      </ScoreBoardMatchStatus>
       <p>
         {homeTeam.score} - {awayTeam.score}
       </p>
       <MatchProgressContainer>
         <span>{homeTeam.name}</span>
-        <MatchProgress />
+        <MatchProgress liveStatus={liveStatus} matchStatus={status.type} />
         <span>{awayTeam.name}</span>
       </MatchProgressContainer>
     </CardContainer>

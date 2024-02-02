@@ -1,19 +1,3 @@
-import { Match, ScoreCardMatch } from "@/types/types";
-
-export const getTextToStatusToShowOnScoreboard = (match: ScoreCardMatch) => {
-  if (match.status.type === "inprogress") {
-    return "LIVE";
-  } else if (match.status.type === "finished") {
-    return "ENDED";
-  } else if (match.liveStatus.toLowerCase() === "canceled") {
-    return "CANCELLED";
-  } else if (!isNaN(match.timestamp)) {
-    return getDateFormatted(match.timestamp);
-  } else {
-    return "";
-  }
-};
-
 export const getDateFormatted = (date?: number) => {
   const dateObj = new Date(date || "");
   const day = dateObj.getDate();
@@ -37,4 +21,20 @@ export const getDateFormatted = (date?: number) => {
     .padStart(2, "0")}`;
 
   return `${formattedDate} ${formattedTime}`;
+};
+
+export const getConicGradientDeg = (
+  liveStatusType: string,
+  liveStatus: string
+) => {
+  switch (liveStatusType) {
+    case "inprogress":
+      const statusValue =
+        liveStatus === "HT" ? 45 : liveStatus?.replace(/[^0-9|.]/, "");
+      return (Number(statusValue) * 360) / 90;
+    case "finished":
+      return 360;
+    default:
+      return 0;
+  }
 };
