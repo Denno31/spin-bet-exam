@@ -2,6 +2,7 @@ import React from "react";
 import { styled } from "styled-components";
 import { MatchProgress } from "../MatchProgress/MatchProgress";
 import { ScoreCardMatch } from "@/types/types";
+import { getDateFormatted } from "@/utils/utils";
 
 interface Props {
   scoreCardMatch: ScoreCardMatch;
@@ -48,12 +49,15 @@ const MatchProgressContainer = styled.div`
 `;
 
 export const ScoreBoardCard = ({ scoreCardMatch }: Props) => {
-  const { competition, country, status, homeTeam, awayTeam } = scoreCardMatch;
+  const { competition, country, status, homeTeam, awayTeam, timestamp } =
+    scoreCardMatch;
+  const label =
+    status.label === "UPCOMING" ? getDateFormatted(timestamp) : status.label;
   return (
     <CardContainer>
       <CountryNameText>{country}</CountryNameText>
       <h3>{competition}</h3>
-      <small>{status.label}</small>
+      <small>{label}</small>
       <p>
         {homeTeam.score} - {awayTeam.score}
       </p>
