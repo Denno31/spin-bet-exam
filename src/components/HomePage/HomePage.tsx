@@ -13,23 +13,27 @@ const Header = styled.h1`
   }
 `;
 
-const FilterButton = styled.button<{ $active: boolean }>`
+const FilterButton = styled.button<{ $active?: boolean }>`
+  font-weight: 545;
   background: transparent;
   color: ${({ theme: { color }, $active }) =>
-    $active ? color.spinGreen : color.spinBetWhite};
-  border: 1px solid
+    $active ? color.spinGreen : color.spinDarkGray};
+  border: none;
+  border-bottom: 2px solid
     ${({ theme: { color }, $active }) =>
-      $active ? color.spinGreen : color.spinBetWhite};
-  padding: 5px;
-  padding-left: 15px;
-  padding-right: 15px;
-  border-radius: 5px;
-  font-weight: 400;
-  font-size: small;
+      $active ? color.spinGreen : "transparent"};
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 0.75rem;
   margin-right: 5px;
   cursor: pointer;
+  &:hover {
+    border-bottom: 2px solid ${({ theme: { color } }) => color.spinGreen};
+    color: ${({ theme: { color } }) => color.spinGreen};
+  }
   & > span {
     margin-left: 5px;
+    font-weight: 500;
   }
   @media (max-width: ${({ theme: { screen } }) => screen.md}) {
     font-size: 0.7rem !important;
@@ -41,8 +45,7 @@ const FilterButton = styled.button<{ $active: boolean }>`
 `;
 
 const TopSection = styled.div`
-  margin-top: 16px;
-  display: flex;
+  background-color: #e5e7eb;
   justify-content: center;
   & > div {
     display: flex;
@@ -53,53 +56,77 @@ const TopSection = styled.div`
 
 const FilterButtonsContainer = styled.nav`
   display: flex;
+  padding-right: 0.9rem;
+`;
+
+const ScoreCardsOuterWrapper = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 74rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1.5rem;
 `;
 
 const ScoreCardsContainer = styled.section`
-  max-width: 1280px;
-  margin-top: 12px;
   display: flex;
-  gap: 4px;
+  gap: 0.25rem;
   flex-wrap: wrap;
 `;
 
 const ScoreCardsSection = styled.section`
-  height: 80vh;
+  resize: both;
+  margin-top: 8px;
+  height: 100%;
   overflow-y: scroll;
-  display: flex;
-  justify-content: center;
-  box-sizing: border-box;
+`;
+
+const TopSectionContentWrapper = styled.div`
+  width: 1280px;
+  margin: 0 auto;
+  padding: 0.2rem 3.5rem 0.2rem 3.5rem;
 `;
 
 export const HomePage = () => {
   return (
     <LayoutContainer>
       <TopSection>
-        <div>
+        <TopSectionContentWrapper>
           <Header>Football live scores and schedule</Header>
           <FilterButtonsContainer>
-            <FilterButton $active>ALL 179</FilterButton>
-            <FilterButton $active>RESULT 179</FilterButton>
-            <FilterButton $active>LIVE 179</FilterButton>
-            <FilterButton $active>UPCOMING 179</FilterButton>
+            <FilterButton $active>
+              ALL <span>(179)</span>
+            </FilterButton>
+            <FilterButton>
+              RESULT <span>(179)</span>
+            </FilterButton>
+            <FilterButton>
+              LIVE <span>(179)</span>
+            </FilterButton>
+            <FilterButton>
+              UPCOMING <span>(179)</span>
+            </FilterButton>
           </FilterButtonsContainer>
-        </div>
+        </TopSectionContentWrapper>
       </TopSection>
       <ScoreCardsSection>
-        <ScoreCardsContainer>
-          <ScoreBoardCard />
-          <ScoreBoardCard />
-          <ScoreBoardCard />
-          <ScoreBoardCard />
-          <ScoreBoardCard />
-          <ScoreBoardCard />
-          <ScoreBoardCard />
-          <ScoreBoardCard />
-          <ScoreBoardCard />
-          <ScoreBoardCard />
-          <ScoreBoardCard />
-          <ScoreBoardCard />
-        </ScoreCardsContainer>
+        <ScoreCardsOuterWrapper>
+          <ScoreCardsContainer>
+            <ScoreBoardCard />
+            <ScoreBoardCard />
+            <ScoreBoardCard />
+            <ScoreBoardCard />
+            <ScoreBoardCard />
+            <ScoreBoardCard />
+            <ScoreBoardCard />
+            <ScoreBoardCard />
+            <ScoreBoardCard />
+            <ScoreBoardCard />
+            <ScoreBoardCard />
+            <ScoreBoardCard />
+            <ScoreBoardCard />
+          </ScoreCardsContainer>
+        </ScoreCardsOuterWrapper>
       </ScoreCardsSection>
     </LayoutContainer>
   );

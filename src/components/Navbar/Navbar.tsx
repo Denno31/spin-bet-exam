@@ -25,6 +25,8 @@ export const NavContent = styled.div`
   align-items: center;
   justify-content: space-between;
   margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
 `;
 
 export const NavLogo = styled.div`
@@ -34,7 +36,7 @@ export const NavLogo = styled.div`
 `;
 
 export const NavSearchInput = styled.div`
-  width: 35%;
+  width: 32%;
   position: relative;
   margin: 5px;
   display: flex;
