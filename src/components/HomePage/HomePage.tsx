@@ -4,6 +4,7 @@ import { styled } from "styled-components";
 import { ScoreBoardCard } from "../ScoreBoardCard/ScoreBoardCard";
 import { getMatchesFilters } from "@/utils/getMatchesFilters";
 import { FilterMenu } from "../FilterMenu/FilterMenu";
+import { ScoreBoardCards } from "../ScoreBoardCards/ScoreBoardCards";
 
 const Header = styled.h1`
   font-size: medium;
@@ -81,6 +82,7 @@ export const HomePage = () => {
           </ScoreCardsContainer>
         </ScoreCardsOuterWrapper>
       </ScoreCardsSection>
+      <ScoreBoardCards />
     </LayoutContainer>
   );
 };

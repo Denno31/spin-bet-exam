@@ -40,14 +40,12 @@ const FilterButton = styled.button<{ $active?: boolean }>`
 `;
 
 export const FilterMenu = () => {
-  const router = useRouter();
   const { filters } = useContext(MatchesContext);
-  const filterKey = router.query["filter-key"];
 
   return (
     <FilterButtonsContainer>
       {filters.map(({ filter, count }) => {
-        const isActive = filterKey === filter.toLowerCase();
+        const isActive = false;
         return (
           <FilterButton key={filter} $active={isActive}>
             {filter} <span>({count})</span>
