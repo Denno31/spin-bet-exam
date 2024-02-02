@@ -40,14 +40,19 @@ const FilterButton = styled.button<{ $active?: boolean }>`
 `;
 
 export const FilterMenu = () => {
-  const { filters } = useContext(MatchesContext);
+  const { filters, handleSetActiveFilter, activeFilter } =
+    useContext(MatchesContext);
 
   return (
     <FilterButtonsContainer>
       {filters.map(({ filter, count }) => {
-        const isActive = false;
+        const isActive = filter === activeFilter.filter;
         return (
-          <FilterButton key={filter} $active={isActive}>
+          <FilterButton
+            key={filter}
+            $active={isActive}
+            onClick={() => handleSetActiveFilter({ filter, count })}
+          >
             {filter} <span>({count})</span>
           </FilterButton>
         );

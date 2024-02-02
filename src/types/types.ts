@@ -1,3 +1,8 @@
+export type StatusObj = {
+  type: MatchStatusType;
+  label: string;
+};
+
 export type Match = {
   id: string;
   name: string;
@@ -61,3 +66,20 @@ export enum MatchStatusType {
   Canceled = "canceled",
   All = "all",
 }
+
+export type ScoreCardMatch = {
+  id: string;
+  competition: string;
+  country: string;
+  timestamp: number;
+  status: StatusObj;
+  homeTeam: {
+    name: string;
+    score: number;
+  };
+  awayTeam: {
+    name: string;
+    score: number;
+  };
+  liveStatus: string;
+};

@@ -26,28 +26,6 @@ const TopSection = styled.div`
   }
 `;
 
-const ScoreCardsOuterWrapper = styled.div`
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 74rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-bottom: 1.5rem;
-`;
-
-const ScoreCardsContainer = styled.section`
-  display: flex;
-  gap: 0.25rem;
-  flex-wrap: wrap;
-`;
-
-const ScoreCardsSection = styled.section`
-  resize: both;
-  margin-top: 8px;
-  height: 100%;
-  overflow-y: scroll;
-`;
-
 const TopSectionContentWrapper = styled.div`
   width: 1280px;
   margin: 0 auto;
@@ -63,25 +41,7 @@ export const HomePage = () => {
           <FilterMenu />
         </TopSectionContentWrapper>
       </TopSection>
-      <ScoreCardsSection>
-        <ScoreCardsOuterWrapper>
-          <ScoreCardsContainer>
-            <ScoreBoardCard />
-            <ScoreBoardCard />
-            <ScoreBoardCard />
-            <ScoreBoardCard />
-            <ScoreBoardCard />
-            <ScoreBoardCard />
-            <ScoreBoardCard />
-            <ScoreBoardCard />
-            <ScoreBoardCard />
-            <ScoreBoardCard />
-            <ScoreBoardCard />
-            <ScoreBoardCard />
-            <ScoreBoardCard />
-          </ScoreCardsContainer>
-        </ScoreCardsOuterWrapper>
-      </ScoreCardsSection>
+
       <ScoreBoardCards />
     </LayoutContainer>
   );

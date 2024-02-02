@@ -1,6 +1,11 @@
 import React from "react";
 import { styled } from "styled-components";
 import { MatchProgress } from "../MatchProgress/MatchProgress";
+import { ScoreCardMatch } from "@/types/types";
+
+interface Props {
+  scoreCardMatch: ScoreCardMatch;
+}
 
 const CardContainer = styled.div`
   flex: 1 1 auto;
@@ -42,17 +47,20 @@ const MatchProgressContainer = styled.div`
   align-items: center;
 `;
 
-export const ScoreBoardCard = () => {
+export const ScoreBoardCard = ({ scoreCardMatch }: Props) => {
+  const { competition, country, status, homeTeam, awayTeam } = scoreCardMatch;
   return (
     <CardContainer>
-      <CountryNameText>RUSSIA</CountryNameText>
-      <h3>Football National League</h3>
-      <small>ENDED</small>
-      <p>0 - 0</p>
+      <CountryNameText>{country}</CountryNameText>
+      <h3>{competition}</h3>
+      <small>{status.label}</small>
+      <p>
+        {homeTeam.score} - {awayTeam.score}
+      </p>
       <MatchProgressContainer>
-        <span>FK Tyumen</span>
+        <span>{homeTeam.name}</span>
         <MatchProgress />
-        <span>FK Tyumen</span>
+        <span>{awayTeam.name}</span>
       </MatchProgressContainer>
     </CardContainer>
   );
