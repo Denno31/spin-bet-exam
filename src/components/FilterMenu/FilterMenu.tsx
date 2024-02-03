@@ -1,11 +1,13 @@
 import { MatchesContext } from "@/context/MatchesContextProvider";
-import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import styled from "styled-components";
 
 const FilterButtonsContainer = styled.nav`
   display: flex;
   padding-right: 0.9rem;
+  @media (max-width: ${({ theme: { screen } }) => screen.md}) {
+    display: none;
+  }
 `;
 
 const FilterButton = styled.button<{ $active?: boolean }>`

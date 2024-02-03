@@ -1,7 +1,11 @@
 import { MatchesContext } from "@/context/MatchesContextProvider";
-import React, { useContext } from "react";
+import React, { Dispatch, SetStateAction, useContext } from "react";
 
 import styled, { keyframes } from "styled-components";
+
+interface Props {
+  isOpen: boolean;
+}
 
 const slideIn = keyframes`
   from {
@@ -26,20 +30,69 @@ const FilterMenuWrapper = styled.div<{ $isOpen: boolean }>`
 const FilterMenuInnerWrapper = styled.div`
   padding: 1.5rem;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
 `;
 
-const FilterMenuMobile = () => {
-  const { filters } = useContext(MatchesContext);
+const FilterMenuMobileBtn = styled.button<{ $active?: boolean }>`
+  cursor: pointer;
+  background-color: transparent;
+  color: ${({ theme: { color }, $active }) =>
+    $active ? color.spinGreen : color.spinDarkGray};
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  padding: 1.5rem;
+  font-size: 0.9rem;
+  &:hover {
+    color: ${({ theme: { color } }) => color.spinGreen};
+  }
+`;
+
+const FilterNameWrapper = styled.span`
+  font-weight: 500;
+`;
+
+const CloseButtonWrapper = styled.div`
+  text-align: right;
+  padding-right: 2.5rem;
+  & > button {
+    border: none;
+    background-color: transparent;
+    font-size: large;
+  }
+`;
+
+const CloseButton = styled.button`
+  cursor: pointer;
+`;
+
+const FilterMenuMobile = ({ isOpen }: Props) => {
+  const {
+    filters,
+    handleSetActiveFilter,
+    activeFilter,
+    handleSetIsMobileMenuOpen,
+  } = useContext(MatchesContext);
   return (
-    <FilterMenuWrapper $isOpen={true}>
-      {filters.map(({ filter, count }) => (
-        <FilterMenuInnerWrapper key={filter}>
-          <button>{filter}</button>
-          <span>({count})</span>
-        </FilterMenuInnerWrapper>
-      ))}
+    <FilterMenuWrapper $isOpen={isOpen}>
+      <CloseButtonWrapper>
+        <CloseButton onClick={handleSetIsMobileMenuOpen}>X</CloseButton>
+      </CloseButtonWrapper>
+      <FilterMenuInnerWrapper>
+        {filters.map(({ filter, count }) => {
+          const isActive = filter === activeFilter.filter;
+          return (
+            <FilterMenuMobileBtn
+              key={filter}
+              $active={isActive}
+              onClick={() => handleSetActiveFilter({ filter, count })}
+            >
+              <FilterNameWrapper>{filter}</FilterNameWrapper>
+              <span>({count})</span>
+            </FilterMenuMobileBtn>
+          );
+        })}
+      </FilterMenuInnerWrapper>
     </FilterMenuWrapper>
   );
 };

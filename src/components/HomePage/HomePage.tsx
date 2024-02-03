@@ -1,47 +1,68 @@
-import React, { useMemo } from "react";
+import React, { useContext } from "react";
 import { LayoutContainer } from "../SHARED/LayoutContainer/LayoutContainer";
 import { styled } from "styled-components";
-import { ScoreBoardCard } from "../ScoreBoardCard/ScoreBoardCard";
-import { getMatchesFilters } from "@/utils/getMatchesFilters";
 import { FilterMenu } from "../FilterMenu/FilterMenu";
 import { ScoreBoardCards } from "../ScoreBoardCards/ScoreBoardCards";
+import { MatchesContext } from "@/context/MatchesContextProvider";
+import dynamic from "next/dynamic";
+
+const FilterButtonMobile = dynamic(
+  () => import("@/components/FilterButtonMobile/FilterButtonMobile")
+);
 
 const Header = styled.h1`
   font-size: medium;
   color: ${({ theme: { color } }) => color.spinLightGray};
   font-weight: 500;
   margin: 10px 0px;
-  @media (max-width: ${({ theme: { screen } }) => screen.xl}) {
+`;
+
+const HeaderMobile = styled(Header)`
+  @media (min-width: ${({ theme: { screen } }) => screen.md}) {
+    display: none;
+  }
+`;
+
+const HeaderDesktop = styled(Header)`
+  @media (max-width: ${({ theme: { screen } }) => screen.md}) {
     display: none;
   }
 `;
 
 const TopSection = styled.div`
+  width: 100%;
   background-color: #e5e7eb;
   justify-content: center;
-  & > div {
-    display: flex;
-    justify-content: space-between;
-    min-width: 1280px;
-  }
 `;
 
 const TopSectionContentWrapper = styled.div`
-  width: 1280px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  max-width: 1240px;
+  padding: 0.2rem 1.4rem 0.2rem 1.4rem;
   margin: 0 auto;
-  padding: 0.2rem 3.5rem 0.2rem 3.5rem;
+  @media (max-width: ${({ theme: { screen } }) => screen.md}) {
+    width: 100%;
+  }
 `;
 
 export const HomePage = () => {
+  const {
+    activeFilter: { filter },
+    handleSetIsMobileMenuOpen,
+  } = useContext(MatchesContext);
   return (
     <LayoutContainer>
       <TopSection>
         <TopSectionContentWrapper>
-          <Header>Football live scores and schedule</Header>
+          <HeaderDesktop>Football live scores and schedule</HeaderDesktop>
+          <HeaderMobile>{filter} Matches</HeaderMobile>
           <FilterMenu />
+          <FilterButtonMobile handleClick={handleSetIsMobileMenuOpen} />
         </TopSectionContentWrapper>
       </TopSection>
-
       <ScoreBoardCards />
     </LayoutContainer>
   );
