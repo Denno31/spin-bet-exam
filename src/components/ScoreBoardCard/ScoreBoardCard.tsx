@@ -1,45 +1,46 @@
 import React from "react";
 import { styled } from "styled-components";
 import { MatchProgress } from "../MatchProgress/MatchProgress";
+import { ScoreCardMatch } from "@/types/types";
+import { getDateFormatted } from "@/utils/utils";
+
+interface Props {
+  scoreCardMatch: ScoreCardMatch;
+}
 
 const CardContainer = styled.div`
-  max-width: 33%;
-  background-color: ${({ theme: { color } }) => color.spinDarkGray};
+  flex: 1 1 auto;
+  line-height: 1.75rem;
+  border-radius: 0.375rem;
+  overflow: hidden;
+  padding: 1.5rem;
   text-align: center;
-  color: ${({ theme: { color } }) => color.spinBetWhite};
-  padding: 1.2rem 0;
-  border-radius: 5px;
-  box-shadow: 0px 0px 0px 3px rgba(61, 61, 61, 0.75);
-  -webkit-box-shadow: 0px 0px 0px 3px rgba(61, 61, 61, 0.75);
-  -moz-box-shadow: 0px 0px 0px 3px rgba(61, 61, 61, 0.75);
-`;
-
-const MatchCountryWrapper = styled.small`
-  font: medium;
-  font-weight: 300;
-`;
-
-const CompetitionNameText = styled.h2`
-  font-weight: 350;
-  font-size: 1.3rem;
-  @media (max-width: ${({ theme: { screen } }) => screen.md}) {
-    font-size: 1.2rem;
+  background-color: #3d3d3d;
+  color: #d1d5db;
+  & > h3 {
+    font-weight: bold;
+    font-size: 1.25rem;
+  }
+  & > span {
+    font-weight: 600;
+  }
+  & > p {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  @media (min-width: 768px) {
+    max-width: 50%;
+  }
+  @media (min-width: 1024px) {
+    max-width: 33%;
   }
 `;
 
-const ScoreBoardMatchStatus = styled.p`
-  margin-top: 10px;
-  @media (max-width: ${({ theme: { screen } }) => screen.md}) {
-    margin-top: 8px;
-  }
+const CountryNameText = styled.small`
+  font-size: 0.875rem;
 `;
-
-const ScoreBoardMatchScores = styled.h1`
-  font-size: 2rem;
-  font-weight: 350;
-  margin: 12px 0;
-`;
-
 const MatchProgressContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -47,17 +48,52 @@ const MatchProgressContainer = styled.div`
   align-items: center;
 `;
 
-export const ScoreBoardCard = () => {
+const ScoreBoardMatchStatus = styled.small<{ $matchStatus: string }>`
+  margin-top: 10px;
+  color: ${({ theme: { color }, $matchStatus }) => {
+    switch ($matchStatus) {
+      case "ENDED":
+        return color.spinGreen;
+      case "LIVE":
+        return color.spinBetYellow;
+      case "CANCELLED":
+        return color.spinBetRed;
+      default:
+        return color.default;
+    }
+  }};
+  @media (max-width: ${({ theme: { screen } }) => screen.md}) {
+    margin-top: 8px;
+  }
+`;
+
+export const ScoreBoardCard = ({ scoreCardMatch }: Props) => {
+  const {
+    competition,
+    country,
+    status,
+    homeTeam,
+    awayTeam,
+    timestamp,
+    liveStatus,
+  } = scoreCardMatch;
+  const label =
+    status.label === "UPCOMING" ? getDateFormatted(timestamp) : status.label;
+
   return (
     <CardContainer>
-      <MatchCountryWrapper>RUSSIA</MatchCountryWrapper>
-      <CompetitionNameText>Football National League</CompetitionNameText>
-      <ScoreBoardMatchStatus>FT</ScoreBoardMatchStatus>
-      <ScoreBoardMatchScores>0 - 0 </ScoreBoardMatchScores>
+      <CountryNameText>{country}</CountryNameText>
+      <h3>{competition}</h3>
+      <ScoreBoardMatchStatus $matchStatus={label}>
+        {label}
+      </ScoreBoardMatchStatus>
+      <p>
+        {homeTeam.score} - {awayTeam.score}
+      </p>
       <MatchProgressContainer>
-        <p>FK Tyumen</p>
-        <MatchProgress />
-        <p>Luch-Energiya Vladivostok</p>
+        <span>{homeTeam.name}</span>
+        <MatchProgress liveStatus={liveStatus} matchStatus={status.type} />
+        <span>{awayTeam.name}</span>
       </MatchProgressContainer>
     </CardContainer>
   );

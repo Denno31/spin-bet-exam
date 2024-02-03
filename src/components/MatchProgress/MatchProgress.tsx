@@ -1,29 +1,26 @@
+import { getConicGradientDeg } from "@/utils/utils";
 import React from "react";
 import styled from "styled-components";
 
 interface Props {
-  matchStatus: string | undefined;
-  liveStatus: string | undefined;
+  matchStatus: string;
+  liveStatus: string;
 }
 
 const OuterBox = styled.div<{ $deg: number }>`
-  width: 84px;
-  height: 84px;
+  width: 5rem;
+  height: 5rem;
   position: relative;
   border-radius: 50%;
   background: conic-gradient(
     ${({ theme: { color } }) => color.spinGreen} 0turn ${({ $deg }) => $deg}deg,
     #4a535f 0turn
   );
-  @media (max-width: ${({ theme: { screen } }) => screen.md}) {
-    width: 82px;
-    height: 82px;
-  }
 `;
 const InnerBox = styled.div`
   position: absolute;
-  width: 81px;
-  height: 81px;
+  width: 4.8rem;
+  height: 4.8rem;
   background-color: #3d3d3d;
   border-radius: 50%;
   top: 50%;
@@ -33,18 +30,25 @@ const InnerBox = styled.div`
   justify-content: center;
   align-items: center;
   color: #fff;
-  font-size: 2rem;
-  @media (max-width: ${({ theme: { screen } }) => screen.md}) {
-    font-size: 1.2rem;
-    width: 79px;
-    height: 79px;
-  }
+  font-size: 1.4rem;
 `;
 
-export const MatchProgress = () => {
+export const MatchProgress = ({ matchStatus, liveStatus }: Props) => {
+  const conicGradientPercentage = getConicGradientDeg(matchStatus, liveStatus);
+  const getTextToShowOnCircularProgress = () => {
+    switch (matchStatus) {
+      case "finished":
+        return "FT";
+      case "inprogress":
+        return `${liveStatus}'`;
+      default:
+        return "";
+    }
+  };
+
   return (
-    <OuterBox $deg={90} data-testid="outer-box">
-      <InnerBox>FT</InnerBox>
+    <OuterBox $deg={conicGradientPercentage} data-testid="outer-box">
+      <InnerBox>{getTextToShowOnCircularProgress()}</InnerBox>
     </OuterBox>
   );
 };

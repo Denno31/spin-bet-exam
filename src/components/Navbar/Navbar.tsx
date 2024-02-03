@@ -21,10 +21,12 @@ export const Nav = styled.nav`
 export const NavContent = styled.div`
   display: flex;
   width: 100%;
-  max-width: 1280px;
+  max-width: 1240px;
   align-items: center;
   justify-content: space-between;
   margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
 `;
 
 export const NavLogo = styled.div`
@@ -34,7 +36,7 @@ export const NavLogo = styled.div`
 `;
 
 export const NavSearchInput = styled.div`
-  width: 35%;
+  width: 32%;
   position: relative;
   margin: 5px;
   display: flex;

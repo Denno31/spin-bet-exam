@@ -1,106 +1,69 @@
-import React from "react";
+import React, { useContext } from "react";
 import { LayoutContainer } from "../SHARED/LayoutContainer/LayoutContainer";
 import { styled } from "styled-components";
-import { ScoreBoardCard } from "../ScoreBoardCard/ScoreBoardCard";
+import { FilterMenu } from "../FilterMenu/FilterMenu";
+import { ScoreBoardCards } from "../ScoreBoardCards/ScoreBoardCards";
+import { MatchesContext } from "@/context/MatchesContextProvider";
+import dynamic from "next/dynamic";
+
+const FilterButtonMobile = dynamic(
+  () => import("@/components/FilterButtonMobile/FilterButtonMobile")
+);
 
 const Header = styled.h1`
   font-size: medium;
   color: ${({ theme: { color } }) => color.spinLightGray};
   font-weight: 500;
   margin: 10px 0px;
-  @media (max-width: ${({ theme: { screen } }) => screen.xl}) {
+`;
+
+const HeaderMobile = styled(Header)`
+  @media (min-width: ${({ theme: { screen } }) => screen.md}) {
     display: none;
   }
 `;
 
-const FilterButton = styled.button<{ $active: boolean }>`
-  background: transparent;
-  color: ${({ theme: { color }, $active }) =>
-    $active ? color.spinGreen : color.spinBetWhite};
-  border: 1px solid
-    ${({ theme: { color }, $active }) =>
-      $active ? color.spinGreen : color.spinBetWhite};
-  padding: 5px;
-  padding-left: 15px;
-  padding-right: 15px;
-  border-radius: 5px;
-  font-weight: 400;
-  font-size: small;
-  margin-right: 5px;
-  cursor: pointer;
-  & > span {
-    margin-left: 5px;
-  }
+const HeaderDesktop = styled(Header)`
   @media (max-width: ${({ theme: { screen } }) => screen.md}) {
-    font-size: 0.7rem !important;
-  }
-  @media (min-width: ${({ theme: { screen } }) =>
-      screen.md}) and (max-width: ${({ theme: { screen } }) => screen.xl}) {
-    margin-right: 3px;
+    display: none;
   }
 `;
 
 const TopSection = styled.div`
-  margin-top: 16px;
-  display: flex;
+  width: 100%;
+  background-color: #e5e7eb;
   justify-content: center;
-  & > div {
-    display: flex;
-    justify-content: space-between;
-    min-width: 1280px;
+`;
+
+const TopSectionContentWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  max-width: 1240px;
+  padding: 0.2rem 1.4rem 0.2rem 1.4rem;
+  margin: 0 auto;
+  @media (max-width: ${({ theme: { screen } }) => screen.md}) {
+    width: 100%;
   }
 `;
 
-const FilterButtonsContainer = styled.nav`
-  display: flex;
-`;
-
-const ScoreCardsContainer = styled.section`
-  max-width: 1280px;
-  margin-top: 12px;
-  display: flex;
-  gap: 4px;
-  flex-wrap: wrap;
-`;
-
-const ScoreCardsSection = styled.section`
-  height: 80vh;
-  overflow-y: scroll;
-  display: flex;
-  justify-content: center;
-  box-sizing: border-box;
-`;
-
 export const HomePage = () => {
+  const {
+    activeFilter: { filter },
+    handleSetIsMobileMenuOpen,
+  } = useContext(MatchesContext);
   return (
     <LayoutContainer>
       <TopSection>
-        <div>
-          <Header>Football live scores and schedule</Header>
-          <FilterButtonsContainer>
-            <FilterButton $active>ALL 179</FilterButton>
-            <FilterButton $active>RESULT 179</FilterButton>
-            <FilterButton $active>LIVE 179</FilterButton>
-            <FilterButton $active>UPCOMING 179</FilterButton>
-          </FilterButtonsContainer>
-        </div>
+        <TopSectionContentWrapper>
+          <HeaderDesktop>Football live scores and schedule</HeaderDesktop>
+          <HeaderMobile>{filter} Matches</HeaderMobile>
+          <FilterMenu />
+          <FilterButtonMobile handleClick={handleSetIsMobileMenuOpen} />
+        </TopSectionContentWrapper>
       </TopSection>
-      <ScoreCardsSection>
-        <ScoreCardsContainer>
-          <ScoreBoardCard />
-          <ScoreBoardCard />
-          <ScoreBoardCard />
-          <ScoreBoardCard />
-          <ScoreBoardCard />
-          <ScoreBoardCard />
-          <ScoreBoardCard />
-          <ScoreBoardCard />
-          <ScoreBoardCard />
-          <ScoreBoardCard />
-          <ScoreBoardCard />
-          <ScoreBoardCard />
-        </ScoreCardsContainer>
-      </ScoreCardsSection>
+      <ScoreBoardCards />
     </LayoutContainer>
   );
 };
