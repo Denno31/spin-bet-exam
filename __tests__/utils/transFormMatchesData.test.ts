@@ -19,6 +19,4 @@ test("transFormMatchesData transforms matches data correctly", () => {
     status: { type: "finished", label: "ENDED" },
     liveStatus: "FT",
   });
-
-  // Add more assertions or test cases based on your specific requirements
 });
