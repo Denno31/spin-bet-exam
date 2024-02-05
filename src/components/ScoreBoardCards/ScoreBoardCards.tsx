@@ -13,12 +13,18 @@ const ScoreCardsOuterWrapper = styled.div`
   padding-left: 1rem;
   padding-right: 1rem;
   padding-bottom: 1.5rem;
+  @media (min-width: 280px) {
+    width: 100%;
+    padding-right: 0.5px;
+    padding-left: 0.5px;
+  }
 `;
 
 const ScoreCardsContainer = styled.section`
   display: flex;
   gap: 0.25rem;
   flex-wrap: wrap;
+  margin-bottom: 20px;
 `;
 
 const ScoreCardsSection = styled.section`

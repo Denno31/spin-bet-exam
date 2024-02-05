@@ -9,6 +9,7 @@ interface Props {
 }
 
 const CardContainer = styled.div`
+  box-sizing: border-box;
   flex: 1 1 auto;
   line-height: 1.75rem;
   border-radius: 0.375rem;
@@ -31,10 +32,13 @@ const CardContainer = styled.div`
     margin-bottom: 1rem;
   }
   @media (min-width: 768px) {
-    max-width: 50%;
+    max-width: 49%;
   }
   @media (min-width: 1024px) {
     max-width: 33%;
+  }
+  @media (min-width: 280px) {
+    width: 100%;
   }
 `;
 
@@ -46,6 +50,13 @@ const MatchProgressContainer = styled.div`
   grid-template-columns: repeat(3, 1fr);
   justify-items: center;
   align-items: center;
+  @media (max-width: 280px) {
+    & > span {
+      font-size: small;
+      display: inline-block;
+    }
+    text-overflow: ellipsis;
+  }
 `;
 
 const ScoreBoardMatchStatus = styled.small<{ $matchStatus: string }>`
